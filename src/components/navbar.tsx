@@ -64,8 +64,7 @@ export function Navbar() {
           href="#hero"
           className="group relative text-xl font-bold tracking-tighter font-[family-name:var(--font-display)] sm:text-2xl"
         >
-          <span className="transition-colors group-hover:text-accent">MRaihan</span>
-          <span className="gradient-text">Hatim</span>
+          <span className="transition-colors group-hover:text-accent">M Raihan Hatim.js</span>
           <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-accent to-[var(--accent-secondary)] transition-all duration-300 group-hover:w-full" />
         </a>
 

@@ -112,18 +112,16 @@ export function Projects() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="mx-auto max-w-6xl grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6"
+          className="mx-auto max-w-6xl grid gap-6 grid-cols-1 sm:grid-cols-2"
         >
           {projects.map((project, index) => {
-            // Featured projects span 4 cols, regular span 3 or 2
             const isFeatured = project.featured
-            const colSpan = isFeatured ? "lg:col-span-4" : "lg:col-span-3"
 
             return (
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className={`group relative ${colSpan} sm:col-span-1 ${isFeatured ? 'sm:col-span-1' : ''}`}
+                className={`group relative`}
               >
                 <div className="relative h-full glass-card rounded-2xl overflow-hidden transition-all duration-500 hover:border-accent/30 hover:glow-sm">
                   {/* Image */}

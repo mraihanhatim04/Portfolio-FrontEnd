@@ -1,26 +1,19 @@
-import { animated, useSpring, useTrail, config } from "@react-spring/web"
 import { Button } from "@/components/ui/button"
-import { Download, Github, Linkedin, Mail  } from "lucide-react"
-import { useState, useEffect, useMemo } from "react"
+import { Download, Github, Linkedin, Mail } from "lucide-react"
+import { useState, useEffect } from "react"
 
 const roles = ["Front-End Developer", "UI/UX Enthusiast", "React Specialist", "Web Architect"]
 
 export function Hero() {
-  const [coords, setCoords] = useState({ x: 0, y: 0 })
   const [roleIndex, setRoleIndex] = useState(0)
   const [displayText, setDisplayText] = useState("")
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
-  // Mouse parallax
+  // Entrance animation
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCoords({
-        x: (e.clientX / window.innerWidth - 0.5) * 40,
-        y: (e.clientY / window.innerHeight - 0.5) * 40,
-      })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
+    const timer = setTimeout(() => setIsVisible(true), 100)
+    return () => clearTimeout(timer)
   }, [])
 
   // Typewriter effect
@@ -46,239 +39,142 @@ export function Hero() {
     return () => clearTimeout(timeout)
   }, [displayText, isDeleting, roleIndex])
 
-  // Parallax springs
-  const parallaxSpring = useSpring({
-    x: coords.x,
-    y: coords.y,
-    config: { mass: 1, tension: 120, friction: 60 },
-  })
-
-  // Content trail animation
-  const content = [
-    { type: "badge" },
-    { type: "heading" },
-    { type: "typewriter" },
-    { type: "description" },
-    { type: "ctas" },
-  ]
-
-  const trail = useTrail(content.length, {
-    from: { opacity: 0, y: 50, scale: 0.96 },
-    to: { opacity: 1, y: 0, scale: 1 },
-    config: config.gentle,
-    delay: 400,
-  })
-
-  // Animated orbs
-  const orb1 = useSpring({
-    from: { x: 0, y: 0, scale: 1 },
-    to: async (next) => {
-      while (true) {
-        await next({ x: 60, y: 40, scale: 1.15 })
-        await next({ x: 0, y: 0, scale: 1 })
-      }
-    },
-    config: { duration: 10000 },
-  })
-
-  const orb2 = useSpring({
-    from: { x: 0, y: 0, scale: 1 },
-    to: async (next) => {
-      while (true) {
-        await next({ x: -60, y: -50, scale: 1.25 })
-        await next({ x: 0, y: 0, scale: 1 })
-      }
-    },
-    config: { duration: 13000 },
-  })
-
-  const orb3 = useSpring({
-    from: { x: 0, y: 0, scale: 1 },
-    to: async (next) => {
-      while (true) {
-        await next({ x: 30, y: -30, scale: 1.1 })
-        await next({ x: -20, y: 20, scale: 0.95 })
-        await next({ x: 0, y: 0, scale: 1 })
-      }
-    },
-    config: { duration: 15000 },
-  })
-
-  // Heading letters for stagger animation
-  const headingLine1 = "Crafting"
-  const headingLine2 = "Digital Futures"
-  const letters1 = useMemo(() => headingLine1.split(""), [])
-  const letters2 = useMemo(() => headingLine2.split(""), [])
-
-  const letterTrail1 = useTrail(letters1.length, {
-    from: { opacity: 0, y: 30 },
-    to: { opacity: 1, y: 0 },
-    config: { tension: 200, friction: 20 },
-    delay: 600,
-  })
-
-  const letterTrail2 = useTrail(letters2.length, {
-    from: { opacity: 0, y: 30 },
-    to: { opacity: 1, y: 0 },
-    config: { tension: 200, friction: 20 },
-    delay: 900,
-  })
-
-  // Particles
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 30 }, (_, i) => ({
-        id: i,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        size: 2 + Math.random() * 3,
-        delay: Math.random() * 12,
-        duration: 8 + Math.random() * 10,
-      })),
-    []
-  )
-
   return (
     <section
       id="hero"
-      className="noise-bg relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background"
     >
-      {/* Grid Layer */}
-      <animated.div
-        style={{
-          transform: parallaxSpring.x.to(
-            (x) => `translate3d(${x * 0.2}px, ${parallaxSpring.y.get() * 0.2}px, 0)`
-          ),
-        }}
-        className="grid-background absolute inset-0 -z-20 opacity-50"
+      {/* Subtle Grid Overlay */}
+      <div className="grid-background absolute inset-0 opacity-50" />
+
+      {/* Subtle Accent Ambient Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-[0.06] blur-[120px]"
+        style={{ background: "radial-gradient(ellipse, var(--accent) 0%, var(--accent-secondary) 50%, transparent 70%)" }}
       />
 
-      {/* Glowing Orbs */}
-      <div className="absolute inset-0 -z-10">
-        <animated.div
-          style={{
-            transform: orb1.x.to(
-              (x) => `translate3d(${x}px, ${orb1.y.get()}px, 0) scale(${orb1.scale.get()})`
-            ),
-          }}
-          className="absolute -top-[10%] -left-[5%] h-[50%] w-[50%] rounded-full bg-[oklch(0.55_0.28_270/0.15)] blur-[120px]"
-        />
-        <animated.div
-          style={{
-            transform: orb2.x.to(
-              (x) => `translate3d(${x}px, ${orb2.y.get()}px, 0) scale(${orb2.scale.get()})`
-            ),
-          }}
-          className="absolute -bottom-[15%] -right-[10%] h-[55%] w-[55%] rounded-full bg-[oklch(0.65_0.20_195/0.12)] blur-[140px]"
-        />
-        <animated.div
-          style={{
-            transform: orb3.x.to(
-              (x) => `translate3d(${x}px, ${orb3.y.get()}px, 0) scale(${orb3.scale.get()})`
-            ),
-          }}
-          className="absolute top-[20%] right-[15%] h-[35%] w-[35%] rounded-full bg-[oklch(0.60_0.24_300/0.10)] blur-[100px]"
-        />
-      </div>
-
-      {/* Floating Particles */}
-      <div className="absolute inset-0 -z-5 overflow-hidden pointer-events-none">
-        {particles.map((p) => (
-          <div
-            key={p.id}
-            className="absolute rounded-full bg-accent/40 animate-particle"
-            style={{
-              left: p.left,
-              top: p.top,
-              width: p.size,
-              height: p.size,
-              animationDelay: `${p.delay}s`,
-              animationDuration: `${p.duration}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Floating Geometric Elements */}
-      <div className="pointer-events-none absolute inset-0 -z-5 overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute border border-accent/15 animate-float opacity-10"
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + i * 10}%`,
-              width: `${20 + i * 12}px`,
-              height: `${20 + i * 12}px`,
-              borderRadius: i % 3 === 0 ? "50%" : i % 3 === 1 ? "4px" : "30%",
-              animationDelay: `${i * 1.5}s`,
-              animationDuration: `${6 + i * 2}s`,
-            }}
-          />
-        ))}
-      </div>
-
       {/* Main Content */}
-      <div className="container relative z-20 mx-auto px-4 text-center sm:px-6 lg:px-8 pt-20">
-        <div className="mx-auto max-w-5xl">
-          {/* Badge */}
-          <animated.div style={trail[0]} className="mb-8 flex justify-center">
-            <div className="gradient-border inline-flex items-center gap-2.5 rounded-full bg-accent/5 px-5 py-2.5 text-sm font-bold tracking-widest text-accent backdrop-blur-md">
-              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-              <span>OPEN TO OPPORTUNITIES</span>
-            </div>
-          </animated.div>
+      <div className="container relative z-10 mx-auto px-4 text-center sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
 
-          {/* Kinetic Heading */}
-          <animated.div style={trail[1]} className="mb-4">
-            <h1 className="text-6xl font-[800] tracking-tighter font-[family-name:var(--font-display)] sm:text-7xl md:text-8xl lg:text-9xl leading-[0.85]">
-              <span className="block">
-                {letterTrail1.map((style, i) => (
-                  <animated.span key={i} style={style} className="inline-block">
-                    {letters1[i] === " " ? "\u00A0" : letters1[i]}
-                  </animated.span>
+          {/* Status Badge */}
+          <div
+            className={`mb-8 flex justify-center transition-all duration-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <div className="gradient-border inline-flex items-center gap-2.5 rounded-full bg-accent/5 px-5 py-2 text-sm font-bold tracking-widest text-accent backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+              OPEN TO OPPORTUNITIES
+            </div>
+          </div>
+
+          {/* Big Bold Headline */}
+          <h1
+            className={`text-5xl font-[800] tracking-tight text-foreground font-[family-name:var(--font-display)] sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] transition-all duration-700 delay-150 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            Front-End
+            <br />
+            <span className="gradient-text">
+              Developer
+            </span>
+          </h1>
+
+          {/* ── Pipeline Animation ── */}
+          <div
+            className={`my-10 mx-auto max-w-xl transition-all duration-700 delay-300 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            {/* Pipeline Container */}
+            <div className="relative">
+              {/* Pipeline Nodes */}
+              <div className="flex items-center justify-between relative z-10">
+                {["Design", "Code", "Build", "Deploy"].map((label) => (
+                  <div key={label} className="flex flex-col items-center gap-2.5">
+                    <div
+                      className="h-5 w-5 rounded-full border-2 border-accent/60 bg-accent/20 transition-all duration-300"
+                      style={{
+                        boxShadow: "0 0 12px rgba(var(--accent-rgb),0.4), 0 0 24px rgba(var(--accent-rgb),0.15)",
+                      }}
+                    />
+                    <span className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground sm:text-xs">
+                      {label}
+                    </span>
+                  </div>
                 ))}
-              </span>
-              <span className="block mt-2">
-                {letterTrail2.map((style, i) => (
-                  <animated.span
-                    key={i}
-                    style={style}
-                    className="inline-block gradient-text"
-                  >
-                    {letters2[i] === " " ? "\u00A0" : letters2[i]}
-                  </animated.span>
-                ))}
-              </span>
-            </h1>
-          </animated.div>
+              </div>
+
+              {/* The Pipe */}
+              <div className="absolute top-[7px] left-[10px] right-[10px] z-0">
+                {/* Pipe body */}
+                <div className="h-[6px] w-full rounded-full bg-accent/10" />
+                {/* Water flow - stream 1 */}
+                <div className="absolute inset-0 h-[6px] overflow-hidden rounded-full">
+                  <div
+                    className="h-full w-[40%] rounded-full animate-pipeline-flow"
+                    style={{
+                      background: "linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-secondary) 70%, transparent 100%)",
+                      filter: "blur(0.5px)",
+                      opacity: 0.9,
+                    }}
+                  />
+                </div>
+                {/* Water flow - stream 2 (delayed, subtle) */}
+                <div className="absolute inset-0 h-[6px] overflow-hidden rounded-full">
+                  <div
+                    className="h-full w-[25%] rounded-full animate-pipeline-flow-delayed"
+                    style={{
+                      background: "linear-gradient(90deg, transparent 0%, var(--accent) 40%, var(--accent-secondary) 60%, transparent 100%)",
+                      filter: "blur(2px)",
+                      opacity: 0.4,
+                    }}
+                  />
+                </div>
+                {/* Pipe glow */}
+                <div
+                  className="absolute inset-0 h-[10px] -top-[2px] rounded-full animate-pipeline-flow opacity-20"
+                  style={{
+                    background: "linear-gradient(90deg, transparent, var(--accent), var(--accent-secondary), transparent)",
+                    filter: "blur(6px)",
+                    width: "40%",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
 
           {/* Typewriter Role */}
-          <animated.div style={trail[2]} className="mb-6 flex justify-center">
-            <span className="text-xl text-muted-foreground font-medium font-[family-name:var(--font-display)] sm:text-2xl">
+          <div
+            className={`mb-4 transition-all duration-700 delay-[400ms] ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <span className="text-lg text-muted-foreground font-mono sm:text-xl">
               {"< "}
               <span className="text-accent">{displayText}</span>
               <span className="animate-pulse text-accent ml-0.5">|</span>
               {" />"}
             </span>
-          </animated.div>
+          </div>
 
-          {/* Description */}
-          <animated.p
-            style={trail[3]}
-            className="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground/80 sm:text-xl leading-relaxed"
+          {/* Subheading */}
+          <p
+            className={`mx-auto mb-12 max-w-2xl text-base text-muted-foreground/80 sm:text-lg leading-relaxed transition-all duration-700 delay-500 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
           >
-            I am{" "}
+            I'm{" "}
             <span className="text-foreground font-semibold">Muhammad Raihan Hatim</span>,
-            bridging the gap between{" "}
-            <span className="gradient-text font-medium italic">complex architecture</span>{" "}
-            and <span className="text-foreground/90 font-medium">minimalist design</span>.
-          </animated.p>
+            building scalable and elegant web interfaces with modern technologies.
+          </p>
 
           {/* CTAs */}
-          <animated.div
-            style={trail[4]}
-            className="flex flex-col items-center justify-center gap-6 sm:flex-row"
+          <div
+            className={`flex flex-col items-center justify-center gap-5 sm:flex-row transition-all duration-700 delay-[600ms] ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
           >
             <Button
               size="lg"
@@ -311,7 +207,8 @@ export function Hero() {
                 </a>
               ))}
             </div>
-          </animated.div>
+          </div>
+
         </div>
       </div>
 
