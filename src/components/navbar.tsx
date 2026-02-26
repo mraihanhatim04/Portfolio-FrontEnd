@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
-import { ModeToggle } from "@/components/mode-toggle"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { name: "Home", href: "#hero" },
@@ -11,39 +11,39 @@ const navLinks = [
   { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
-]
+];
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("#hero")
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("#hero");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Track active section via IntersectionObserver
   useEffect(() => {
-    const sectionIds = navLinks.map((l) => l.href.replace("#", ""))
-    const observers: IntersectionObserver[] = []
+    const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
+    const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
-      const el = document.getElementById(id)
-      if (!el) return
+      const el = document.getElementById(id);
+      if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(`#${id}`)
+          if (entry.isIntersecting) setActiveSection(`#${id}`);
         },
-        { rootMargin: "-40% 0px -55% 0px" }
-      )
-      obs.observe(el)
-      observers.push(obs)
-    })
+        { rootMargin: "-40% 0px -55% 0px" },
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
 
-    return () => observers.forEach((o) => o.disconnect())
-  }, [])
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
 
   return (
     <motion.header
@@ -56,16 +56,22 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8"
-        style={{ height: scrolled ? "56px" : "72px", transition: "height 0.4s ease" }}
+      <div
+        className="container mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8"
+        style={{
+          height: scrolled ? "56px" : "72px",
+          transition: "height 0.4s ease",
+        }}
       >
         {/* Logo */}
         <a
           href="#hero"
-          className="group relative text-xl font-bold tracking-tighter font-[family-name:var(--font-display)] sm:text-2xl"
+          className="group relative text-xl font-bold tracking-tighter font-display sm:text-2xl"
         >
-          <span className="transition-colors group-hover:text-accent">M Raihan Hatim.js</span>
-          <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-accent to-[var(--accent-secondary)] transition-all duration-300 group-hover:w-full" />
+          <span className="transition-colors group-hover:text-accent">
+            Raihan Hatim
+          </span>
+          <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-linear-to-r from-accent to-(--accent-secondary) transition-all duration-300 group-hover:w-full" />
         </a>
 
         {/* Desktop Nav */}
@@ -75,7 +81,9 @@ export function Navbar() {
               key={link.name}
               href={link.href}
               className={`relative px-3 py-2 text-sm font-medium transition-colors duration-300 rounded-lg hover:text-accent ${
-                activeSection === link.href ? "text-accent" : "text-muted-foreground"
+                activeSection === link.href
+                  ? "text-accent"
+                  : "text-muted-foreground"
               }`}
             >
               {link.name}
@@ -104,11 +112,23 @@ export function Navbar() {
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
-                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <X className="h-5 w-5" />
                 </motion.div>
               ) : (
-                <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <Menu className="h-5 w-5" />
                 </motion.div>
               )}
@@ -148,5 +168,5 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </motion.header>
-  )
+  );
 }

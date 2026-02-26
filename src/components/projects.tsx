@@ -1,13 +1,13 @@
-import { motion } from "framer-motion"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, ArrowUpRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import storeslicing from "@/assets/projects/storeslicing.png"
-import warungku from "@/assets/projects/warungku.png"
-import brainwave from "@/assets/projects/brainwave.png"
-import hooBank from "@/assets/projects/hoobank.png"
-import portfolioWebsite from "@/assets/projects/portfolio.png"
-import dashboardAdmin from "@/assets/projects/DashboardAdmin.png"
+import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import storeslicing from "@/assets/projects/storeslicing.png";
+import warungku from "@/assets/projects/warungku.png";
+import brainwave from "@/assets/projects/brainwave.png";
+import hooBank from "@/assets/projects/hoobank.png";
+import portfolioWebsite from "@/assets/projects/portfolio.png";
+import dashboardAdmin from "@/assets/projects/DashboardAdmin.png";
 
 const projects = [
   {
@@ -51,7 +51,15 @@ const projects = [
     description:
       "A modern and responsive admin dashboard for managing the website and the products.",
     image: dashboardAdmin,
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Zustand", "React Query", "Recharts", "Axios"],
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Zustand",
+      "React Query",
+      "Recharts",
+      "Axios",
+    ],
     demo: "https://dashboard-admin-nine-phi.vercel.app/",
     featured: false,
   },
@@ -64,12 +72,12 @@ const projects = [
     demo: "https://mraihanhatim-frontend.netlify.app/",
     featured: false,
   },
-]
+];
 
 const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1 } },
-}
+};
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50, scale: 0.92 },
@@ -77,9 +85,12 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+    },
   },
-}
+};
 
 export function Projects() {
   return (
@@ -101,7 +112,7 @@ export function Projects() {
           <span className="mb-4 inline-block text-sm font-bold tracking-widest text-accent uppercase">
             My Work
           </span>
-          <h2 className="text-4xl font-[800] tracking-tighter font-[family-name:var(--font-display)] sm:text-5xl md:text-6xl">
+          <h2 className="text-4xl font-extrabold tracking-tighter font-display sm:text-5xl md:text-6xl">
             Featured <span className="gradient-text">Projects</span>
           </h2>
         </motion.div>
@@ -115,7 +126,7 @@ export function Projects() {
           className="mx-auto max-w-6xl grid gap-6 grid-cols-1 sm:grid-cols-2"
         >
           {projects.map((project, index) => {
-            const isFeatured = project.featured
+            const isFeatured = project.featured;
 
             return (
               <motion.div
@@ -132,7 +143,7 @@ export function Projects() {
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     {/* Gradient Overlay on Hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                     {/* Overlay Content */}
                     <div className="absolute inset-0 flex flex-col justify-end p-5 opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
@@ -144,7 +155,11 @@ export function Projects() {
                         className="w-fit rounded-full bg-white/20 text-white backdrop-blur-md border border-white/20 hover:bg-white/30 gap-2"
                         asChild
                       >
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <ExternalLink className="h-3.5 w-3.5" />
                           Live Demo
                         </a>
@@ -162,7 +177,7 @@ export function Projects() {
                   {/* Card Body */}
                   <div className="p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-lg font-bold font-[family-name:var(--font-display)] transition-colors group-hover:gradient-text">
+                      <h3 className="text-lg font-bold font-display transition-colors group-hover:gradient-text">
                         {project.title}
                       </h3>
                       <a
@@ -196,10 +211,10 @@ export function Projects() {
                   </div>
                 </div>
               </motion.div>
-            )
+            );
           })}
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { motion } from "framer-motion"
-import { Github, Linkedin, Mail, ArrowUp, Heart } from "lucide-react"
+import { motion } from "framer-motion";
+import { Github, Linkedin, Mail, ArrowUp, Heart } from "lucide-react";
 
 const footerLinks = [
   { name: "Home", href: "#hero" },
@@ -8,26 +8,38 @@ const footerLinks = [
   { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
-]
+];
 
 const socialLinks = [
-  { icon: <Github className="h-5 w-5" />, href: "https://github.com/mraihanhatim04", label: "GitHub" },
-  { icon: <Linkedin className="h-5 w-5" />, href: "https://www.linkedin.com/in/mraihanhatim/", label: "LinkedIn" },
-  { icon: <Mail className="h-5 w-5" />, href: "https://mail.google.com/mail/?view=cm&fs=1&to=raihanhatim.01@gmail.com", label: "Email" },
-]
+  {
+    icon: <Github className="h-5 w-5" />,
+    href: "https://github.com/mraihanhatim04",
+    label: "GitHub",
+  },
+  {
+    icon: <Linkedin className="h-5 w-5" />,
+    href: "https://www.linkedin.com/in/mraihanhatim/",
+    label: "LinkedIn",
+  },
+  {
+    icon: <Mail className="h-5 w-5" />,
+    href: "https://mail.google.com/mail/?view=cm&fs=1&to=raihanhatim.01@gmail.com",
+    label: "Email",
+  },
+];
 
 export function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <footer className="relative border-t border-accent/10 bg-background overflow-hidden">
       {/* Background accent */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[1px] w-full max-w-5xl bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-1px w-full max-w-5xl bg-linear-to-r from-transparent via-accent/30 to-transparent" />
         <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 h-64 w-[70%] rounded-full bg-accent/5 blur-[120px]" />
       </div>
 
@@ -40,12 +52,16 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <a href="#hero" className="text-xl font-bold font-[family-name:var(--font-display)] tracking-tighter">
+            <a
+              href="#hero"
+              className="text-xl font-bold font-display tracking-tighter"
+            >
               MRaihan<span className="gradient-text">Hatim</span>
             </a>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs leading-relaxed">
               Engineering high-performance web experiences with{" "}
-              <span className="text-foreground/80 font-medium">precision</span> and{" "}
+              <span className="text-foreground/80 font-medium">precision</span>{" "}
+              and{" "}
               <span className="gradient-text font-medium italic">purpose</span>.
             </p>
           </motion.div>
@@ -119,10 +135,12 @@ export function Footer() {
             © {currentYear} Muhammad Raihan Hatim. All rights reserved.
           </p>
           <div className="text-xs text-muted-foreground flex items-center gap-1.5">
-            Crafted with <Heart className="h-3 w-3 text-red-500 animate-pulse" /> using React & Tailwind
+            Crafted with{" "}
+            <Heart className="h-3 w-3 text-red-500 animate-pulse" /> using React
+            & Tailwind
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

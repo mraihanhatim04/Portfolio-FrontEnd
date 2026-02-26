@@ -1,93 +1,157 @@
-import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
-import {
-  Code2,
-  Smartphone,
-  Settings2,
-  Users2,
-  Globe,
-  Palette,
-  Layers,
-  Atom,
-  Blocks,
-  Wind,
-  Zap,
-  Plug,
-  FileCode,
-  FileType,
-  GitBranch,
-  Package,
-  Bot,
-  MessageCircle,
-  Lightbulb,
-} from "lucide-react"
+import { motion } from "framer-motion";
 
-const skillCategories = [
-  {
-    title: "Front-End",
-    icon: <Code2 className="h-5 w-5" />,
-    color: "from-violet-500 to-purple-600",
-    skills: [
-      { name: "Html, Css, Javascript", icon: <FileCode className="h-4 w-4" /> },
-      { name: "React.Js", icon: <Atom className="h-4 w-4" /> },
-      { name: "TypeScript", icon: <FileType className="h-4 w-4" /> },
-      { name: "Next.Js", icon: <Globe className="h-4 w-4" /> },
-      { name: "Rest API", icon: <Plug className="h-4 w-4" /> },
-    ],
-  },
-  {
-    title: "Styling & UI",
-    icon: <Palette className="h-5 w-5" />,
-    color: "from-cyan-500 to-teal-500",
-    skills: [
-      { name: "Tailwind CSS", icon: <Wind className="h-4 w-4" /> },
-      { name: "Shadcn UI", icon: <Blocks className="h-4 w-4" /> },
-      { name: "Next UI", icon: <Layers className="h-4 w-4" /> },
-      { name: "Responsive Design", icon: <Smartphone className="h-4 w-4" /> },
-    ],
-  },
-  {
-    title: "Tools & Workflow",
-    icon: <Settings2 className="h-5 w-5" />,
-    color: "from-amber-500 to-orange-500",
-    skills: [
-      { name: "Git / GitHub", icon: <GitBranch className="h-4 w-4" /> },
-      { name: "npm / pnpm / yarn", icon: <Package className="h-4 w-4" /> },
-      { name: "VScode", icon: <Code2 className="h-4 w-4" /> },
-      { name: "AI Agents", icon: <Bot className="h-4 w-4" /> },
-    ],
-  },
-  {
-    title: "Soft Skills",
-    icon: <Users2 className="h-5 w-5" />,
-    color: "from-pink-500 to-rose-500",
-    skills: [
-      { name: "Teamwork", icon: <Users2 className="h-4 w-4" /> },
-      { name: "Communication", icon: <MessageCircle className="h-4 w-4" /> },
-      { name: "Problem Solving", icon: <Lightbulb className="h-4 w-4" /> },
-      { name: "Adaptability", icon: <Zap className="h-4 w-4" /> },
-    ],
-  },
-]
+type Skill = {
+  name: string;
+  logoType: "brand" | "icon";
+  imageUrl?: string;
+  theme?: "light" | "dark";
+};
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-}
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.92 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+const skills: Skill[] = [
+  {
+    name: "HTML",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    theme: "light",
   },
-}
+  {
+    name: "CSS",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    theme: "light",
+  },
+  {
+    name: "JavaScript",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    theme: "light",
+  },
+  {
+    name: "TypeScript",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    theme: "light",
+  },
+  {
+    name: "React.js",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    theme: "light",
+  },
+  {
+    name: "Next.js",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    theme: "light",
+  },
+  {
+    name: "Tailwind CSS",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+    theme: "light",
+  },
+  {
+    name: "TanStack Query",
+    logoType: "brand",
+    imageUrl: "https://avatars.githubusercontent.com/u/72518640?s=200&v=4",
+    theme: "light",
+  },
+  {
+    name: "Zustand",
+    logoType: "brand",
+    imageUrl: "https://zustand-demo.pmnd.rs/favicon.ico",
+    theme: "light",
+  },
+  {
+    name: "shadcn/ui",
+    logoType: "brand",
+    imageUrl: "https://ui.shadcn.com/favicon.ico",
+    theme: "dark",
+  },
+  {
+    name: "NextUI",
+    logoType: "brand",
+    imageUrl: "https://avatars.githubusercontent.com/u/86160567?s=200&v=4",
+    theme: "light",
+  },
+  {
+    name: "REST API",
+    logoType: "brand",
+    imageUrl:
+      "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
+    theme: "light",
+  },
+  {
+    name: "Node.js",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+    theme: "dark",
+  },
+  {
+    name: "Express.js",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+    theme: "light",
+  },
+  {
+    name: "Supabase",
+    logoType: "brand",
+    imageUrl: "https://avatars.githubusercontent.com/u/54469796?s=200&v=4",
+    theme: "dark",
+  },
+  {
+    name: "MySQL",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+    theme: "light",
+  },
+  {
+    name: "Axios",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/axios/axios-plain.svg",
+    theme: "light",
+  },
+  {
+    name: "PostgreSQL",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+    theme: "light",
+  },
+  {
+    name: "Git",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+    theme: "light",
+  },
+  {
+    name: "GitHub",
+    logoType: "brand",
+    imageUrl:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+    theme: "dark",
+  },
+  {
+    name: "Cursor AI Agent",
+    logoType: "brand",
+    imageUrl: "https://cursor.com/favicon.ico",
+    theme: "light",
+  },
+];
 
 export function Skills() {
-  const [activeTab, setActiveTab] = useState(0)
-
   return (
     <section id="skills" className="relative py-28 overflow-hidden">
       {/* Background Glow */}
@@ -103,103 +167,54 @@ export function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-16 text-center"
+          className="mb-10 text-center"
         >
           <span className="mb-4 inline-block text-sm font-bold tracking-widest text-accent uppercase">
-            What I Know
+            Tech Stack
           </span>
-          <h2 className="text-4xl font-[800] tracking-tighter font-[family-name:var(--font-display)] sm:text-5xl md:text-6xl">
-            Technical <span className="gradient-text">Skills</span>
+          <h2 className="text-4xl font-extrabold tracking-tighter font-display sm:text-5xl md:text-6xl">
+            Tools & <span className="gradient-text">Technologies</span>
           </h2>
         </motion.div>
 
-        {/* Category Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className="mb-12 flex flex-wrap justify-center gap-3"
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mx-auto mt-10 max-w-4xl"
         >
-          {skillCategories.map((cat, i) => (
-            <button
-              key={cat.title}
-              onClick={() => setActiveTab(i)}
-              className={`group relative flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
-                activeTab === i
-                  ? "text-white shadow-lg shadow-accent/25"
-                  : "glass-card text-muted-foreground hover:text-foreground hover:border-accent/30"
-              }`}
-            >
-              {activeTab === i && (
-                <motion.div
-                  layoutId="skill-tab-bg"
-                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${cat.color}`}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10 flex items-center gap-2">
-                {cat.icon}
-                {cat.title}
-              </span>
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Skills Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-            className="mx-auto max-w-4xl grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {skillCategories[activeTab].skills.map((skill) => (
-              <motion.div
+          <div className="grid grid-cols-5 gap-6 justify-items-center sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12">
+            {skills.map((skill) => (
+              <motion.button
                 key={skill.name}
-                variants={cardVariants}
-                className="group glass-card rounded-2xl p-4 transition-all duration-300 hover:border-accent/30 hover:glow-sm"
+                whileHover={{ scale: 1.08, rotate: 2 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative flex h-16 w-16 items-center justify-center rounded-2xl transition-all"
+                aria-label={skill.name}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br ${skillCategories[activeTab].color} text-white shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                    {skill.icon}
-                  </div>
-                  <span className="font-semibold font-[family-name:var(--font-display)]">
-                    {skill.name}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* All Skills Overview — Compact hexagonal badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-16 mx-auto max-w-3xl"
-        >
-          <p className="text-center text-sm text-muted-foreground mb-6">
-            All technologies I work with
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {skillCategories.flatMap((cat) =>
-              cat.skills.map((skill) => (
-                <span
-                  key={skill.name}
-                  className="gradient-border rounded-full bg-accent/5 px-3 py-1 text-xs font-medium text-muted-foreground transition-all hover:text-accent hover:bg-accent/10"
+                <div
+                  className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-all group-hover:scale-105 group-hover:-translate-y-0.5 ${
+                    skill.theme === "dark"
+                      ? "bg-black border-zinc-800"
+                      : "bg-white border-zinc-200"
+                  }`}
                 >
+                  <img
+                    src={skill.imageUrl}
+                    alt={skill.name}
+                    loading="lazy"
+                    className="h-9 w-9 object-contain"
+                  />
+                </div>
+                <span className="pointer-events-none absolute -bottom-6 translate-y-2 rounded-full bg-background px-2 py-0.5 text-[10px] font-medium text-muted-foreground opacity-0 shadow-sm ring-1 ring-border/60 transition-all group-hover:translate-y-0 group-hover:opacity-100">
                   {skill.name}
                 </span>
-              ))
-            )}
+              </motion.button>
+            ))}
           </div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
