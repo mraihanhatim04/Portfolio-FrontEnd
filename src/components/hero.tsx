@@ -211,7 +211,7 @@ export function Hero() {
               className="group relative h-12 rounded-full px-8 text-base font-bold overflow-hidden bg-linear-to-r from-accent to-(--accent-secondary) text-white border-0 shadow-lg shadow-accent/25 hover:shadow-accent/40 hover:scale-105 active:scale-95 transition-all duration-300"
               asChild
             >
-              <a href="/cv/MRaihanHatim-FrontEnd.pdf" target="_blank">
+              <a href="/cv/CV_MuhammadRaihanHatim.pdf" target="_blank">
                 <span className="relative z-10 flex items-center gap-2">
                   Download CV
                   <Download className="h-4 w-4" />
